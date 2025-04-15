@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mood Detector</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f8ff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+      h1 {
+        color: #333;
+      }
+      textarea {
+        width: 300px;
+        height: 100px;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      #result {
+        margin-top: 20px;
+        font-size: 20px;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>💬 Mood Detector</h1>
+    <textarea id="userInput" placeholder="Type something here..."></textarea
+    ><br />
+    <button onclick="detectMood()">Detect Mood</button>
+    <div id="result"></div>
+
+    <script>
+      async function detectMood() {
+        const text = document.getElementById("userInput").value;
+
+        const response = await fetch("http://127.0.0.1:5000/mood", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+
+        const data = await response.json();
+        document.getElementById(
+          "result"
+        ).innerText = `Detected Mood: 🧠 ${data.mood}`;
+      }
+    </script>
+  </body>
+</html>
